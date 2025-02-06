@@ -1,7 +1,7 @@
-package org.edutecno.backend.auth.usuario.repository;
+package org.edutecno.backend.usuario.repository;
 
 
-import org.edutecno.backend.auth.usuario.model.User;
+import org.edutecno.backend.usuario.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

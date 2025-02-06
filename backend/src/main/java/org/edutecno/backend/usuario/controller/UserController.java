@@ -1,4 +1,4 @@
-package org.edutecno.backend.auth.usuario.controller;
+package org.edutecno.backend.usuario.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

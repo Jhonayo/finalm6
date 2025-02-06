@@ -1,4 +1,4 @@
-package org.edutecno.backend.auth.usuario.model;
+package org.edutecno.backend.usuario.model;
 
 
 import java.util.List;
@@ -21,18 +21,25 @@ import lombok.NoArgsConstructor;
 public class User {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(nullable = false)
   private String name;
 
   @Column(unique = true)
   private String email;
 
   @Column(nullable = false)
+  private String username;
+
+  @Column(nullable = false)
   private String password;
 
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
   private List<Token> tokens;
+
+  @Enumerated(EnumType.STRING)
+  private Role role;
 
 }

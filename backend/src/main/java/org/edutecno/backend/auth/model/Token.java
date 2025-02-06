@@ -1,16 +1,8 @@
 package org.edutecno.backend.auth.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
-import org.edutecno.backend.auth.usuario.model.User;
+import org.edutecno.backend.usuario.model.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +21,7 @@ public final class Token {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(unique = true)
@@ -38,14 +30,13 @@ public final class Token {
     @Enumerated(EnumType.STRING)
     private TokenType tokenType = TokenType.BEARER;
 
+    @Column(nullable = false)
     private Boolean revoked;
-
+    @Column(nullable = false)
     private Boolean expired;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-
 
 }

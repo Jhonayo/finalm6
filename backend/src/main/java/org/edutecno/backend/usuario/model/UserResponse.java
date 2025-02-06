@@ -1,4 +1,4 @@
-package org.edutecno.backend.auth.usuario.model;
+package org.edutecno.backend.usuario.model;
 
 public record UserResponse(
         String name,

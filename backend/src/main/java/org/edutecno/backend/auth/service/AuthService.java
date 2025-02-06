@@ -6,8 +6,9 @@ import org.edutecno.backend.auth.controller.RegisterRequest;
 import org.edutecno.backend.auth.controller.TokenResponse;
 import org.edutecno.backend.auth.model.Token;
 import org.edutecno.backend.auth.repository.TokenRepository;
-import org.edutecno.backend.auth.usuario.model.User;
-import org.edutecno.backend.auth.usuario.repository.UserRepository;
+import org.edutecno.backend.usuario.model.Role;
+import org.edutecno.backend.usuario.model.User;
+import org.edutecno.backend.usuario.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,7 +32,9 @@ public class AuthService {
         var user = User.builder()
                 .name(request.name())
                 .email(request.email())
+                .username(request.username())
                 .password(passwordEncoder.encode(request.password()))
+                .role(Role.ROLE_CLIENT)
                 .build();
 
         var savedUser = userRepository.save(user);
