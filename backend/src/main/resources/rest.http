@@ -1,0 +1,10 @@
+
+# Crear un usuario
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+    "name": "Juan Pérez",
+    "email": "juanp@example.com",
+    "password": "123456"
+}
