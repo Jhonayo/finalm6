@@ -2,6 +2,8 @@ package org.edutecno.backend.config;
 
 import org.edutecno.backend.usuario.model.User;
 import org.edutecno.backend.usuario.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class AppConfig {
 
     private final UserRepository repository;
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
 
     @Bean
@@ -27,10 +30,14 @@ public class AppConfig {
         return username -> {
             final User user = repository.findByEmail(username)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+            logger.info("Cargando usuario: {} con rol: {}", user.getEmail(), user.getRole());
+
             return org.springframework.security.core.userdetails.User
                     .builder()
                     .username(user.getEmail())
                     .password(user.getPassword())
+                    .authorities(user.getRole().getAuthority())
                     .build();
         };
     }

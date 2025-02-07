@@ -35,11 +35,11 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         //Verificar si ya existen materias
         if (materiaRepository.count() > 0) {
-            System.out.println("Los datos iniciales ya existen. No se insertarán duplicados.");
+            System.out.println("    Los datos iniciales ya existen. No se insertarán duplicados.");
             return;
         }
 
-        System.out.println("Insertando datos iniciales...");
+        System.out.println("    Insertando datos iniciales...");
 
         // Crear y guardar materias en la base de datos
         MateriaModel materia1 = materiaRepository.save(new MateriaModel("Lenguaje"));
@@ -61,22 +61,22 @@ public class DataInitializer implements CommandLineRunner {
         alumnoRepository.save(alumno1);
         alumnoRepository.save(alumno2);
 
-        System.out.println("Datos iniciales cargados correctamente.");
+        System.out.println("    Datos iniciales cargados correctamente.");
 
         // 🔍 Verificar si ya existen usuarios
         if (userRepository.count() > 0) {
-            System.out.println(" Los usuarios ya existen. No se insertarán duplicados.");
+            System.out.println("    Los usuarios ya existen. No se insertarán duplicados.");
             return;
         }
 
-        System.out.println("Creando usuarios iniciales...");
+        System.out.println("    Creando usuarios iniciales...");
 
         //  Crear usuario ADMIN
         User adminUser = User.builder()
                 .name("Admin")
                 .email("admin@mail.com")
                 .username("admin")
-                .password(passwordEncoder.encode("admin123"))
+                .password(passwordEncoder.encode("admin"))
                 .role(Role.ROLE_ADMIN)
                 .build();
 
@@ -85,7 +85,7 @@ public class DataInitializer implements CommandLineRunner {
                 .name("User")
                 .email("user@mail.com")
                 .username("user")
-                .password(passwordEncoder.encode("user123"))
+                .password(passwordEncoder.encode("user"))
                 .role(Role.ROLE_CLIENT)
                 .build();
 
@@ -93,6 +93,6 @@ public class DataInitializer implements CommandLineRunner {
         userRepository.save(adminUser);
         userRepository.save(clientUser);
 
-        System.out.println("Usuarios iniciales creados correctamente.");
+        System.out.println("    Usuarios iniciales creados correctamente.");
     }
 }

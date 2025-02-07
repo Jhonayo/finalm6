@@ -35,6 +35,7 @@ public class AlumnoModel {
     @JsonManagedReference
     private Set<MateriaModel> materias = new HashSet<>();
 
+
     public AlumnoModel(String rut, String nombre, String direccion) {
         this.rut = rut;
         this.nombre = nombre;
