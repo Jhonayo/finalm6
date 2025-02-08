@@ -6,6 +6,7 @@ import org.edutecno.backend.materia.dto.MateriaDTO;
 import org.edutecno.backend.materia.model.MateriaModel;
 import org.edutecno.backend.materia.repository.MateriaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class MateriaService {
 
     private final MateriaRepository materiaRepository;
 
+    @Transactional(readOnly = true)
     public ArrayList<MateriaModel> obtenerMaterias() {
         return (ArrayList<MateriaModel>) materiaRepository.findAll();
     }

@@ -2,8 +2,6 @@ package org.edutecno.backend.config;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 import org.edutecno.backend.auth.model.Token;
 import org.edutecno.backend.auth.repository.TokenRepository;
@@ -12,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,19 +40,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->{
                     logger.info("Configurando permisos de acceso...");
-                    req.requestMatchers("/auth/**").permitAll(); // Permitir autenticación sin token
-                    req.requestMatchers("/api/materias/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CLIENT"); // Asegurar que el usuario tenga el rol correcto
+                    req.requestMatchers("/auth/**").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/api/**").hasAuthority("ROLE_CLIENT");
+                    req.requestMatchers("/api/**").hasAuthority("ROLE_ADMIN");
+
                     req.anyRequest().authenticated();
                 })
-
-
-                        /*req
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/api/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CLIENT")
-                        //.requestMatchers("/api/materias/**").hasRole("ADMIN")
-                                .anyRequest()
-                                .authenticated()
-                )*/
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

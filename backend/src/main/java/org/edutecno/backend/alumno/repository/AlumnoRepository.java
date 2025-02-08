@@ -10,7 +10,5 @@ import java.util.List;
 @Repository
 public interface AlumnoRepository extends JpaRepository<AlumnoModel, Long> {
 
-/*    @Query("SELECT a FROM AlumnoModel a LEFT JOIN FETCH a.materialist")
-    List<AlumnoModel> findAllWithMaterias();*/
 
 }

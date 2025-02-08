@@ -1,0 +1,7 @@
+### Obtener listado de materias
+GET http://localhost:8080/api/materias
+HTTP/1.1 403 
+
+# @_RES
+
+# @_END

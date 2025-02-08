@@ -1,10 +1,38 @@
 
 # Crear un usuario
-POST http://localhost:8080/auth/register
+POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-    "name": "Juan Pérez",
-    "email": "juanp@example.com",
-    "password": "123456"
+    "email": "user@mail.com",
+    "password": "user"
 }
+
+eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyIiwibmFtZSI6IlVzZXIiLCJyb2xlIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJ1c2VyQG1haWwuY29tIiwiaWF0IjoxNzM4OTA5NDg2LCJleHAiOjE3Mzk1MTQyODZ9.8YRWVsLS8Dvi0JZm-X_aCMm10FfFFaaPU0BUQtnSjyo
+
+### Obtener listado de materias
+GET http://localhost:8080/api/materias
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyIiwibmFtZSI6IlVzZXIiLCJyb2xlIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJ1c2VyQG1haWwuY29tIiwiaWF0IjoxNzM4OTA5NDg2LCJleHAiOjE3Mzk1MTQyODZ9.8YRWVsLS8Dvi0JZm-X_aCMm10FfFFaaPU0BUQtnSjyo
+
+### Obtener listado de materias
+GET http://localhost:8080/api/alumnos
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyIiwibmFtZSI6IlVzZXIiLCJyb2xlIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJ1c2VyQG1haWwuY29tIiwiaWF0IjoxNzM4OTA5NDg2LCJleHAiOjE3Mzk1MTQyODZ9.8YRWVsLS8Dvi0JZm-X_aCMm10FfFFaaPU0BUQtnSjyo
+
+### Crear una nueva materia
+POST http://localhost:8080/api/materias
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyIiwibmFtZSI6IlVzZXIiLCJyb2xlIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJ1c2VyQG1haWwuY29tIiwiaWF0IjoxNzM4OTA5NDg2LCJleHAiOjE3Mzk1MTQyODZ9.8YRWVsLS8Dvi0JZm-X_aCMm10FfFFaaPU0BUQtnSjyo
+
+{
+  "nombre": "Computacion"
+}
+
+### Editar materia con ID 1
+PUT http://localhost:8080/api/materias/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyIiwibmFtZSI6IlVzZXIiLCJyb2xlIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJ1c2VyQG1haWwuY29tIiwiaWF0IjoxNzM4OTA5NDg2LCJleHAiOjE3Mzk1MTQyODZ9.8YRWVsLS8Dvi0JZm-X_aCMm10FfFFaaPU0BUQtnSjyo
+
+{
+  "nombre": "Computacion Avanzada"
+}
+
