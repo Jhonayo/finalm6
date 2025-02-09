@@ -41,8 +41,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req ->{
                     logger.info("Configurando permisos de acceso...");
                     req.requestMatchers("/auth/**").permitAll();
-                    req.requestMatchers(HttpMethod.GET, "/api/**").hasAuthority("ROLE_CLIENT");
-                    req.requestMatchers("/api/**").hasAuthority("ROLE_ADMIN");
+                    //req.requestMatchers(HttpMethod.GET, "/api/**").hasAuthority("ROLE_CLIENT");
+                    req.requestMatchers("/api/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CLIENT");
 
                     req.anyRequest().authenticated();
                 })

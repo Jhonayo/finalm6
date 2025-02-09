@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Admin Panel</title>
+</head>
+<body>
+<h2>Panel de Administrador</h2>
+
+<a href="/logout">Cerrar sesión</a>
+
+<h3>Gestión de Alumnos</h3>
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Materias</th>
+    <th>Acciones</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="alumno : ${alumnos}">
+    <td th:text="${alumno.idUsuario}"></td>
+    <td th:text="${alumno.nombreUsuario}"></td>
+    <td>
+      <span th:each="materia : ${alumno.materias}" th:text="${materia.nombreMateria} + ' '"></span>
+    </td>
+    <td>
+      <!-- Solo admin puede modificar -->
+      <a th:href="@{'/admin/editar-alumno/' + ${alumno.idUsuario}}">Editar</a>
+      <a th:href="@{'/admin/eliminar-alumno/' + ${alumno.idUsuario}}">Eliminar</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Gestión de Materias</h3>
+<a href="/admin/nueva-materia">Agregar Materia</a>
+
+</body>
+</html>

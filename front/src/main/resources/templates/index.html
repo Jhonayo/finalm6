@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+
+<main class="container">
+
+    <header>
+        <h1>Lista de Alumnos</h1>
+    </header>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>RUT</th>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Materias</th>
+               <!-- <th>Acciones</th> -->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="alumno : ${alumnos}">
+                <td th:text="${alumno.id}"></td>
+                <td th:text="${alumno.rut}"></td>
+                <td th:text="${alumno.nombre}"></td>
+                <td th:text="${alumno.direccion}"></td>
+                <td>
+                    <ul>
+                        <li th:each="materia : ${alumno.materias}" th:text="${materia.nombre}"></li>
+                    </ul>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${session.role == 'ROLE_ADMIN'}">
+            <a th:href="@{/}" class="btn btn-secondary">Nuevo Alumno</a>
+            <a th:href="@{/}" class="btn btn-secondary">Nueva Materia</a>
+        </div>
+
+    </div>
+
+
+
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

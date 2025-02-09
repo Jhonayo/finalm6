@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+<h2>Dashboard</h2>
+<p>Bienvenido, puedes ver la lista de alumnos</p>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="alumno : ${alumnos}">
+        <td th:text="${alumno.idUsuario}"></td>
+        <td th:text="${alumno.nombreUsuario}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/logout">Cerrar sesión</a>
+</body>
+</html>
