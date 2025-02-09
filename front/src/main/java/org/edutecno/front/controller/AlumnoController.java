@@ -52,15 +52,13 @@ public class AlumnoController {
         AlumnoDTO alumno = alumnoService.obtenerAlumnoPorId(id);
         model.addAttribute("alumno", alumno);
         model.addAttribute("materias", materiaService.listarMaterias());
-        return "admin/nuevo-alumno";
+        return "admin/actualizar-alumno";
     }
 
-
-
     @PutMapping("/actualizar/{id}")
-    public String actualizarAlumno(@PathVariable Long id, @RequestParam String nombreUsuario, @RequestParam List<Long> materias) {
-        alumnoService.actualizarAlumno(id, nombreUsuario, materias);
-        return "redirect:/admin/alumnos";
+    public String actualizarAlumno(@PathVariable Long id, @ModelAttribute AlumnoDTO alumnoDTO) {
+        alumnoService.actualizarAlumno(alumnoDTO);
+        return "redirect:/alumnos";
     }
 
 }

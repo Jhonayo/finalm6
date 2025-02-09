@@ -13,7 +13,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th>ID</th>
+                <th>N° </th>
                 <th>RUT</th>
                 <th>Nombre</th>
                 <th>Dirección</th>
@@ -23,7 +23,7 @@
             </thead>
             <tbody>
             <tr th:each="alumno : ${alumnos}">
-                <td th:text="${alumno.id}"></td>
+                <td th:text="${alumnoStat.index + 1}"></td>
                 <td th:text="${alumno.rut}"></td>
                 <td th:text="${alumno.nombre}"></td>
                 <td th:text="${alumno.direccion}"></td>

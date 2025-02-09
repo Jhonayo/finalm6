@@ -13,20 +13,36 @@
         <table class="table">
             <thead>
             <tr>
-                <th>ID</th>
+                <th>N° </th>
                 <th>Nombre</th>
+                <th th:if="${session.role == 'ROLE_ADMIN'}">Acciones</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="materia : ${materias}">
-                <td th:text="${materia.id}"></td>
+                <td th:text="${materiaStat.index + 1}"></td>
                 <td th:text="${materia.nombre}"></td>
+                <td >
+                    <a th:if="${session.role == 'ROLE_ADMIN'}"
+                       th:href="@{/materias/actualizar/{id}(id=${materia.id})}">
+                        <img src="/images/boton-editar.png" alt="Editar Stock" width="25" height="25">
+                    </a>
+                </td>
             </tr>
+
             </tbody>
         </table>
-
     </div>
 
+    <form th:action="@{/materias/guardar}" method="post" th:object="${materiaNueva}">
+        <div class="mb-3">
+            <label for="inputName" class="form-label">Nueva Materia</label>
+            <input type="text" class="form-control" id="inputName" th:field="*{nombre}" placeholder="Nombre Materia nueva" required>
+        </div>
+
+        <button type="submit">Guardar Materia</button>
+    </form>
+    <a href="/alumnos">Volver</a>
 
 
 </main>

@@ -35,13 +35,12 @@ public class AlumnoService {
 
 
     public void guardarAlumno(AlumnoDTO alumnoDTO) {
-        log.info("  ---  ya entre en el alumno service guardar alumno");
 
         ResponseEntity<Void> response = restTemplate.exchange(
                 "http://localhost:8080/api/alumnos",
                 HttpMethod.POST,
                 new HttpEntity<>(alumnoDTO, crearHeaders()),
-                Void.class // ✅ No esperamos una respuesta de tipo Map[]
+                Void.class
         );
 
         log.info("Respuesta del servidor al guardar alumno: " + response.getStatusCode());
@@ -60,23 +59,15 @@ public class AlumnoService {
 
 
 
-    public void actualizarAlumno(Long id, String nombreUsuario, List<Long> materias) {
-        Map<String, Object> requestBody = Map.of(
-                "id", id,
-                "nombreUsuario", nombreUsuario,
-                "materiasIds", materias
-        );
-
-        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, crearHeaders());
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                "http://localhost:8080/api/alumnos/" + id,
+    public void actualizarAlumno(AlumnoDTO alumnoDTO) {
+        ResponseEntity<Void> response = restTemplate.exchange(
+                "http://localhost:8080/api/alumnos/" + alumnoDTO.getId(),
                 HttpMethod.PUT,
-                requestEntity,
-                String.class
+                new HttpEntity<>(alumnoDTO, crearHeaders()),
+                Void.class
         );
 
-        log.info("Respuesta del servidor: " + response.getStatusCode());
+        log.info("Respuesta del servidor al actualizar alumno: " + response.getStatusCode());
     }
 
     private HttpHeaders crearHeaders() {

@@ -1,6 +1,8 @@
 package org.edutecno.front.controller;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import org.edutecno.front.dto.AlumnoDTO;
+import org.edutecno.front.dto.MateriaDto;
 import org.edutecno.front.service.MateriaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,24 +20,32 @@ public class MateriaController {
 
     @GetMapping()
     public String materias(Model model, HttpSession session) {
-        log.info("\n  ----verificando entrada");
-        log.debug("\n  ----verificando entrada");
         String token = (String) session.getAttribute("jwt");
-        log.info("    --------  este es el metodo get de materias: " + token);
         if (token == null) {
-            log.info("--- Me enviara al Login");
-            log.debug("--- Me enviara al Login por debug");
             return "redirect:/alumnos";
         }
         model.addAttribute("materias", materiaService.listarMaterias());
+        model.addAttribute("materiaNueva", new MateriaDto());
         return "lista-materias";
+    }
 
+    @PostMapping("/guardar")
+    public String guardarMateria(@ModelAttribute("materiaNueva")MateriaDto materiaDto){
+        materiaService.guardarNuevaMateria(materiaDto);
+        return "redirect:/materias";
+
+    }
+    @GetMapping("/actualizar/{id}")
+    public String actualizarMateria(@PathVariable int id, Model model) {
+        MateriaDto materia = materiaService.obtenerMateriaPorId(id);
+        model.addAttribute("materia", materia);
+        return "admin/actualizar-materia";
     }
 
     @PostMapping("/actualizar/{id}")
-    public String actualizarMateria(@PathVariable Long id, @RequestParam String nombreMateria) {
-        materiaService.actualizarMateria(id, nombreMateria);
-        return "redirect:/admin/materias";
+    public String actualizarMateria(@PathVariable Long id, @ModelAttribute MateriaDto materiaDto) {
+        materiaService.actualizarMateria(materiaDto);
+        return "redirect:/materias";
     }
 }
 

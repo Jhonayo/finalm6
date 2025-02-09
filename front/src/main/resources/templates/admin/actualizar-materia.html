@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+
+<main class="container">
+
+    <header>
+        <h1>Actualizar Materia</h1>
+    </header>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nombre Actual</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${materia.nombre}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form th:action="@{/materias/actualizar/{id}(id=${materia.id})}" method="post" th:object="${materia}">
+        <div class="mb-3">
+            <label for="inputName" class="form-label">Nuevo Nombre</label>
+            <input type="text" class="form-control" id="inputName" th:field="*{nombre}" placeholder="Nombre Materia nueva" required>
+        </div>
+
+        <button type="submit">Guardar Cambios</button>
+    </form>
+    <a href="/materias">Volver</a>
+
+
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>
