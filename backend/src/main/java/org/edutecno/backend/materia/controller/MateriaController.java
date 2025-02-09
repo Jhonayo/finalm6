@@ -24,6 +24,12 @@ public class MateriaController {
         return ResponseEntity.ok(materiaService.obtenerMaterias());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<MateriaDTO> obtenerMateriaPorId(@PathVariable Long id) {
+        MateriaDTO materiaBuscada = materiaService.buscarMateriaPorId(id);
+        return ResponseEntity.ok(materiaBuscada);
+    }
+
     @PostMapping
     public ResponseEntity<MateriaModel> guardarMateria(@RequestBody MateriaDTO materia) {
         MateriaModel nuevaMateria = materiaService.guardarMateria(materia);

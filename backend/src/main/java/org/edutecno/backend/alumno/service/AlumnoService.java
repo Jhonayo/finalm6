@@ -26,6 +26,20 @@ public class AlumnoService {
         return (ArrayList<AlumnoModel>) alumnoRepository.findAll();
     }
 
+    public AlumnoDTO buscarAlumnoPorId(Long id) {
+        AlumnoDTO alumnoDTO = new AlumnoDTO();
+        AlumnoModel alumnoBuscado = alumnoRepository.findById(id).orElse(null);
+        if (alumnoBuscado != null) {
+            alumnoDTO.setId(alumnoBuscado.getId());
+            alumnoDTO.setRut(alumnoBuscado.getRut());
+            alumnoDTO.setNombre(alumnoBuscado.getNombre());
+            alumnoDTO.setDireccion(alumnoBuscado.getDireccion());
+            alumnoDTO.setMateriasIds(alumnoBuscado.getMaterias().stream().map(MateriaModel::getId).collect(Collectors.toList()));
+
+        }
+        return alumnoDTO;
+    }
+
 
     public AlumnoDTO guardarAlumno(AlumnoDTO alumnoDto) {
         AlumnoModel alumnoModel = new AlumnoModel();

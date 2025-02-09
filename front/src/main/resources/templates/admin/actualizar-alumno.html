@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+
+<main class="container">
+    <h2>Actualizar Alumno</h2>
+
+    <form th:action="@{/alumnos/actualizar/{id}(id=${alumno.id})}" method="post" th:object="${alumno}">
+        <input type="hidden" name="_method" value="put"/>
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="mb-3">
+            <label for="inputRut" class="form-label">Rut</label>
+            <input type="text" class="form-control" id="inputRut" th:field="*{rut}" placeholder="Rut alumno" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="inputName" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="inputName" th:field="*{nombre}" placeholder="Nombre Alumno" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="inputDireccion" class="form-label">Direccion</label>
+            <input type="text" class="form-control" id="inputDireccion" th:field="*{direccion}" placeholder="Direccion Alumno" required>
+        </div>
+
+        <label>Seleccionar Materias:</label><br>
+        <div th:each="materia : ${materias}">
+            <input type="checkbox" th:field="*{materiasIds}" th:value="${materia.id}"
+                   th:checked="${alumno.materiasIds != null && alumno.materiasIds.contains(materia.id)}">
+            <label th:text="${materia.nombre}"></label><br>
+        </div>
+
+        <button type="submit">Guardar Alumno</button>
+    </form>
+
+
+
+    <br>
+    <a href="/alumnos">Volver</a>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

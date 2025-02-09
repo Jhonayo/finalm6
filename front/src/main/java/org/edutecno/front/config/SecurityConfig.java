@@ -24,9 +24,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/auth/**", "/css/**", "/js/**", "/webjars/**").permitAll()
                         //TODO permitir el paso solo con el logeo con el token ver como applicarlo
-                        .requestMatchers("/alumnos/**").permitAll()
-                        //.requestMatchers("/admin/**").hasRole("ADMIN")
-                        //.requestMatchers("/client/**").hasRole("CLIENT")
+                        .requestMatchers("/alumnos/**", "/materias/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->

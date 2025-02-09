@@ -18,7 +18,7 @@
                 <th>Nombre</th>
                 <th>Dirección</th>
                 <th>Materias</th>
-               <!-- <th>Acciones</th> -->
+               <th th:if="${session.role == 'ROLE_ADMIN'}">Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -32,14 +32,19 @@
                         <li th:each="materia : ${alumno.materias}" th:text="${materia.nombre}"></li>
                     </ul>
                 </td>
-
+                <td >
+                    <a th:if="${session.role == 'ROLE_ADMIN'}"
+                       th:href="@{/alumnos/actualizar/{id}(id=${alumno.id})}">
+                        <img src="/images/boton-editar.png" alt="Editar Stock" width="25" height="25">
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>
 
         <div th:if="${session.role == 'ROLE_ADMIN'}">
-            <a th:href="@{/}" class="btn btn-secondary">Nuevo Alumno</a>
-            <a th:href="@{/}" class="btn btn-secondary">Nueva Materia</a>
+            <a th:href="@{/alumnos/nuevo}" class="btn btn-secondary">Nuevo Alumno</a>
+            <a th:href="@{/materias}" class="btn btn-secondary">Nueva Materia</a>
         </div>
 
     </div>

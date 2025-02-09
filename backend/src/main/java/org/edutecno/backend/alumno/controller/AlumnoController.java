@@ -22,6 +22,12 @@ public class AlumnoController {
         return ResponseEntity.ok(alumnoService.listarAlumnos());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AlumnoDTO> obtenerAlumno(@PathVariable Long id) {
+        AlumnoDTO alumnoBuscado = alumnoService.buscarAlumnoPorId(id);
+        return ResponseEntity.ok(alumnoBuscado);
+    }
+
     @PostMapping()
     public ResponseEntity<AlumnoDTO> nuevoAlumno(@RequestBody AlumnoDTO alumnoDto){
         AlumnoDTO alumnoNuevo = alumnoService.guardarAlumno(alumnoDto);

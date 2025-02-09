@@ -2,6 +2,7 @@ package org.edutecno.front.service;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import org.edutecno.front.dto.AlumnoDTO;
 import org.edutecno.front.security.JwtTokenStorage;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -32,8 +33,36 @@ public class AlumnoService {
         return Arrays.asList(response.getBody());
     }
 
+
+    public void guardarAlumno(AlumnoDTO alumnoDTO) {
+        log.info("  ---  ya entre en el alumno service guardar alumno");
+
+        ResponseEntity<Void> response = restTemplate.exchange(
+                "http://localhost:8080/api/alumnos",
+                HttpMethod.POST,
+                new HttpEntity<>(alumnoDTO, crearHeaders()),
+                Void.class // ✅ No esperamos una respuesta de tipo Map[]
+        );
+
+        log.info("Respuesta del servidor al guardar alumno: " + response.getStatusCode());
+    }
+
+    public AlumnoDTO obtenerAlumnoPorId(Long id) {
+        log.info("  ---  Obteniendo alumno con ID: " + id);
+        ResponseEntity<AlumnoDTO> response = restTemplate.exchange(
+                "http://localhost:8080/api/alumnos/" + id,
+                HttpMethod.GET,
+                new HttpEntity<>(null, crearHeaders()),
+                AlumnoDTO.class
+        );
+        return response.getBody();
+    }
+
+
+
     public void actualizarAlumno(Long id, String nombreUsuario, List<Long> materias) {
         Map<String, Object> requestBody = Map.of(
+                "id", id,
                 "nombreUsuario", nombreUsuario,
                 "materiasIds", materias
         );
@@ -55,20 +84,13 @@ public class AlumnoService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         String token = (String) session.getAttribute("jwt");
-        log.info("  ---  Método para crear el header  ---");
-        log.info("   ******** Token del usuario: **********\n{}", token);
-
         if (token != null && !token.isEmpty()) {
             headers.set("Authorization", "Bearer " + token);
-            log.debug(" -----   Enviando token en la petición: Bearer {}", token);
         } else {
             log.warn(" No se encontró un token en la sesión.");
         }
-
-        log.info("----   Headers enviados en la petición: {}", headers);
         return headers;
     }
-
 }
 
 

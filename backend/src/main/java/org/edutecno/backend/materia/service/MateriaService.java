@@ -31,6 +31,16 @@ public class MateriaService {
         return materiaRepository.save(materiaModel);
     }
 
+    public MateriaDTO buscarMateriaPorId(Long id) {
+        MateriaDTO materiaDTO = new MateriaDTO();
+        MateriaModel materiaModel = materiaRepository.findById(id).get();
+        if(materiaModel != null) {
+            materiaDTO.setId(materiaModel.getId());
+            materiaDTO.setNombre(materiaModel.getNombre());
+        }
+        return materiaDTO;
+    }
+
     public MateriaModel actualizarMateria(Long id, MateriaDTO materia) {
       return materiaRepository.findById(id)
               .map(materiaExistente ->{
