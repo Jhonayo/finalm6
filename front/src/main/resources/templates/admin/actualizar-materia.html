@@ -6,11 +6,11 @@
 
 <main class="container">
 
-    <header>
+    <header class="jumbotron my-4">
         <h1>Actualizar Materia</h1>
     </header>
     <div class="table-responsive">
-        <table class="table">
+        <table class="table fs-4">
             <thead>
             <tr>
                 <th>Nombre Actual</th>
@@ -24,15 +24,18 @@
         </table>
     </div>
 
+    <div class="table-responsive my-4">
     <form th:action="@{/materias/actualizar/{id}(id=${materia.id})}" method="post" th:object="${materia}">
         <div class="mb-3">
-            <label for="inputName" class="form-label">Nuevo Nombre</label>
+            <label for="inputName" class="form-label fs-4">Nuevo Nombre</label>
             <input type="text" class="form-control" id="inputName" th:field="*{nombre}" placeholder="Nombre Materia nueva" required>
         </div>
-
-        <button type="submit">Guardar Cambios</button>
+        <div class="my-4 g-5">
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <a href="/materias" class="btn btn-primary">Volver</a>
+</div>
     </form>
-    <a href="/materias">Volver</a>
+    </div>
 
 
 </main>

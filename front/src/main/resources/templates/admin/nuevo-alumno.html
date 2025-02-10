@@ -5,34 +5,37 @@
 <header th:replace="~{fragments/navbar :: navbar}"></header>
 
 <main class="container">
-    <h2>Registrar Nuevo Alumno</h2>
+    <header class="jumbotron my-4">
+        <h2>Registrar Nuevo Alumno</h2>
+    </header>
 
     <form th:action="@{/alumnos/guardar}" method="post" th:object="${alumno}">
-        <div class="mb-3">
+        <div class="mb-3 mt-4">
             <label for="inputRut" class="form-label">Rut</label>
             <input type="text" class="form-control" id="inputRut" th:field="*{rut}" placeholder="Rut alumno" required>
         </div>
         <div class="mb-3">
             <label for="inputName" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="inputName" th:field="*{nombre}" placeholder="Nombre Alumno" required>
+            <input type="text" class="form-control" id="inputName" th:field="*{nombre}" placeholder="Nombre Alumno"
+                   required>
         </div>
         <div class="mb-3">
             <label for="inputDireccion" class="form-label">Direccion</label>
-            <input type="text" class="form-control" id="inputDireccion" th:field="*{direccion}" placeholder="Direccion Alumno" required>
+            <input type="text" class="form-control" id="inputDireccion" th:field="*{direccion}"
+                   placeholder="Direccion Alumno" required>
         </div>
 
-        <label>Seleccionar Materias:</label><br>
+        <label class="my-4 fs-4">Seleccionar Materias:</label><br>
         <div th:each="materia : ${materias}">
             <input type="checkbox" th:field="*{materiasIds}" th:value="${materia.id}">
             <label th:text="${materia.nombre}"></label><br>
         </div>
 
-        <button type="submit">Guardar Alumno</button>
+        <div class="my-4" >
+            <button type="submit" class="btn btn-primary">Guardar Alumno</button>
+            <a href="/alumnos" class="btn btn-primary">Volver</a>
+        </div>
     </form>
-
-
-    <br>
-    <a href="/alumnos">Volver</a>
 </main>
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>

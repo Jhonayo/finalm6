@@ -26,7 +26,6 @@ public class AlumnoController {
     @GetMapping
     public String listarAlumnos(Model model, HttpSession session) {
         String token = (String) session.getAttribute("jwt");
-        log.info("    --------  este es el metodo get de alumnos: " + token);
         if (token == null) {
             return "redirect:/login";
         }
@@ -35,20 +34,35 @@ public class AlumnoController {
     }
 
     @GetMapping("/nuevo")
-    public String mostrarFormularioNuevoAlumno(Model model) {
+    public String mostrarFormularioNuevoAlumno(Model model, HttpSession session) {
+        String role = (String) session.getAttribute("role");
+        String token = (String) session.getAttribute("jwt");
+        if (token == null || !"ROLE_ADMIN".equals(role)) {
+            return "redirect:/alumnos";
+        }
         model.addAttribute("alumno", new AlumnoDTO());
         model.addAttribute("materias", materiaService.listarMaterias());
         return "admin/nuevo-alumno";
     }
 
     @PostMapping("/guardar")
-    public String guardarAlumno(@ModelAttribute("alumno") AlumnoDTO alumnoDTO) {
+    public String guardarAlumno(@ModelAttribute("alumno") AlumnoDTO alumnoDTO, HttpSession session) {
+        String role = (String) session.getAttribute("role");
+        String token = (String) session.getAttribute("jwt");
+        if (token == null || !"ROLE_ADMIN".equals(role)) {
+            return "redirect:/alumnos";
+        }
         alumnoService.guardarAlumno(alumnoDTO);
         return "redirect:/alumnos";
     }
 
     @GetMapping("/actualizar/{id}")
-    public String mostrarFormularioAlumno(@PathVariable Long id, Model model) {
+    public String mostrarFormularioAlumno(@PathVariable Long id, Model model, HttpSession session) {
+        String role = (String) session.getAttribute("role");
+        String token = (String) session.getAttribute("jwt");
+        if (token == null || !"ROLE_ADMIN".equals(role)) {
+            return "redirect:/alumnos";
+        }
         AlumnoDTO alumno = alumnoService.obtenerAlumnoPorId(id);
         model.addAttribute("alumno", alumno);
         model.addAttribute("materias", materiaService.listarMaterias());
@@ -56,7 +70,12 @@ public class AlumnoController {
     }
 
     @PutMapping("/actualizar/{id}")
-    public String actualizarAlumno(@PathVariable Long id, @ModelAttribute AlumnoDTO alumnoDTO) {
+    public String actualizarAlumno(@PathVariable Long id, @ModelAttribute AlumnoDTO alumnoDTO, HttpSession session) {
+        String role = (String) session.getAttribute("role");
+        String token = (String) session.getAttribute("jwt");
+        if (token == null || !"ROLE_ADMIN".equals(role)) {
+            return "redirect:/alumnos";
+        }
         alumnoService.actualizarAlumno(alumnoDTO);
         return "redirect:/alumnos";
     }

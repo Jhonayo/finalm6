@@ -20,8 +20,9 @@ public class MateriaController {
 
     @GetMapping()
     public String materias(Model model, HttpSession session) {
+        String role = (String) session.getAttribute("role");
         String token = (String) session.getAttribute("jwt");
-        if (token == null) {
+        if (token == null || !"ROLE_ADMIN".equals(role)) {
             return "redirect:/alumnos";
         }
         model.addAttribute("materias", materiaService.listarMaterias());
@@ -30,20 +31,35 @@ public class MateriaController {
     }
 
     @PostMapping("/guardar")
-    public String guardarMateria(@ModelAttribute("materiaNueva")MateriaDto materiaDto){
+    public String guardarMateria(@ModelAttribute("materiaNueva")MateriaDto materiaDto, HttpSession session) {
+        String role = (String) session.getAttribute("role");
+        String token = (String) session.getAttribute("jwt");
+        if (token == null || !"ROLE_ADMIN".equals(role)) {
+            return "redirect:/alumnos";
+        }
         materiaService.guardarNuevaMateria(materiaDto);
         return "redirect:/materias";
 
     }
     @GetMapping("/actualizar/{id}")
-    public String actualizarMateria(@PathVariable int id, Model model) {
+    public String actualizarMateria(@PathVariable int id, Model model, HttpSession session) {
+        String role = (String) session.getAttribute("role");
+        String token = (String) session.getAttribute("jwt");
+        if (token == null || !"ROLE_ADMIN".equals(role)) {
+            return "redirect:/alumnos";
+        }
         MateriaDto materia = materiaService.obtenerMateriaPorId(id);
         model.addAttribute("materia", materia);
         return "admin/actualizar-materia";
     }
 
     @PostMapping("/actualizar/{id}")
-    public String actualizarMateria(@PathVariable Long id, @ModelAttribute MateriaDto materiaDto) {
+    public String actualizarMateria(@PathVariable Long id, @ModelAttribute MateriaDto materiaDto, HttpSession session) {
+        String role = (String) session.getAttribute("role");
+        String token = (String) session.getAttribute("jwt");
+        if (token == null || !"ROLE_ADMIN".equals(role)) {
+            return "redirect:/alumnos";
+        }
         materiaService.actualizarMateria(materiaDto);
         return "redirect:/materias";
     }

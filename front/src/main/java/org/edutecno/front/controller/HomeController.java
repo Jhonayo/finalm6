@@ -11,9 +11,9 @@ public class HomeController {
 
     @GetMapping
     public String home(HttpSession session) {
-        /*if (session.getAttribute("usuario") != null) {
-            return "redirect:/index";
-        }*/
+        if (session.getAttribute("role") != "ROLE_ADMIN") {
+            return "redirect:/alumnos";
+        }
         return "login";
     }
 }

@@ -5,7 +5,10 @@
 <header th:replace="~{fragments/navbar :: navbar}"></header>
 
 <main class="container">
-    <h2>Actualizar Alumno</h2>
+    <header class="jumbotron my-4">
+        <h2>Actualizar Alumno</h2>
+    </header>
+
 
     <form th:action="@{/alumnos/actualizar/{id}(id=${alumno.id})}" method="post" th:object="${alumno}">
         <input type="hidden" name="_method" value="put"/>
@@ -26,20 +29,20 @@
             <input type="text" class="form-control" id="inputDireccion" th:field="*{direccion}" placeholder="Direccion Alumno" required>
         </div>
 
-        <label>Seleccionar Materias:</label><br>
+        <label class="my-4 fs-4">Seleccionar Materias:</label><br>
         <div th:each="materia : ${materias}">
             <input type="checkbox" th:field="*{materiasIds}" th:value="${materia.id}"
                    th:checked="${alumno.materiasIds != null && alumno.materiasIds.contains(materia.id)}">
             <label th:text="${materia.nombre}"></label><br>
         </div>
 
-        <button type="submit">Guardar Alumno</button>
+        <div class="my-4" >
+            <button type="submit" class="btn btn-primary">Guardar Alumno</button>
+            <a href="/alumnos" class="btn btn-primary">Volver</a>
+        </div>
     </form>
 
 
-
-    <br>
-    <a href="/alumnos">Volver</a>
 </main>
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>

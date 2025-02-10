@@ -6,11 +6,11 @@
 
 <main class="container">
 
-    <header>
+    <header class="jumbotron my-4">
         <h1>Lista de Materias</h1>
     </header>
-    <div class="table-responsive">
-        <table class="table">
+    <div class="table-responsive my-4 ">
+        <table class="table table-secondary table-striped">
             <thead>
             <tr>
                 <th>N° </th>
@@ -24,8 +24,7 @@
                 <td th:text="${materia.nombre}"></td>
                 <td >
                     <a th:if="${session.role == 'ROLE_ADMIN'}"
-                       th:href="@{/materias/actualizar/{id}(id=${materia.id})}">
-                        <img src="/images/boton-editar.png" alt="Editar Stock" width="25" height="25">
+                       th:href="@{/materias/actualizar/{id}(id=${materia.id})}" class="btn btn-primary">Editar</a>
                     </a>
                 </td>
             </tr>
@@ -34,15 +33,20 @@
         </table>
     </div>
 
+    <div class="table-responsive my-4">
     <form th:action="@{/materias/guardar}" method="post" th:object="${materiaNueva}">
         <div class="mb-3">
-            <label for="inputName" class="form-label">Nueva Materia</label>
+            <label for="inputName" class="form-label fs-3">Nueva Materia</label>
             <input type="text" class="form-control" id="inputName" th:field="*{nombre}" placeholder="Nombre Materia nueva" required>
         </div>
 
-        <button type="submit">Guardar Materia</button>
+        <div class="my-4 g-5">
+        <button type="submit" class="btn btn-primary" >Guardar Materia</button>
+        <a href="/alumnos" class="btn btn-primary">Volver</a>
+        </div>
     </form>
-    <a href="/alumnos">Volver</a>
+    </div>
+
 
 
 </main>
