@@ -6,17 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
-/*
-    private final UserRepository userRepository;
 
-    @GetMapping
-    public List<UserResponse> changePassword() {
-        return userRepository.findAll()
-                .stream()
-                .map(user -> new UserResponse(user.getName(), user.getEmail()))
-                .toList();
-    }*/
 }

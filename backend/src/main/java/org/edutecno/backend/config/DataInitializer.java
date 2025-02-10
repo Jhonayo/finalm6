@@ -33,7 +33,6 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        //Verificar si ya existen materias
         if (materiaRepository.count() > 0) {
             System.out.println("    Los datos iniciales ya existen. No se insertarán duplicados.");
             return;
@@ -41,37 +40,29 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("    Insertando datos iniciales...");
 
-        // Crear y guardar materias en la base de datos
         MateriaModel materia1 = materiaRepository.save(new MateriaModel("Lenguaje"));
-        MateriaModel materia2 = materiaRepository.save(new MateriaModel("Matemática"));
+        MateriaModel materia2 = materiaRepository.save(new MateriaModel("Matematica"));
 
-        // Recuperar las materias guardadas
         materia1 = materiaRepository.findById(materia1.getId()).orElseThrow();
         materia2 = materiaRepository.findById(materia2.getId()).orElseThrow();
 
-        //  Crear alumnos
-        AlumnoModel alumno1 = new AlumnoModel("741", "Juan", "Belloto");
-        AlumnoModel alumno2 = new AlumnoModel("852", "Fenrir", "Belloto");
+        AlumnoModel alumno1 = new AlumnoModel("123456", "Juan Ramirez", "Belloto");
+        AlumnoModel alumno2 = new AlumnoModel("789456", "Fenrir", "Belloto");
 
-        // Asignar materias a los alumnos
         alumno1.setMaterias(new HashSet<>(List.of(materia1, materia2)));
         alumno2.setMaterias(new HashSet<>(List.of(materia2)));
 
-        // Guardar alumnos en la base de datos
         alumnoRepository.save(alumno1);
         alumnoRepository.save(alumno2);
 
         System.out.println("    Datos iniciales cargados correctamente.");
 
-        // 🔍 Verificar si ya existen usuarios
         if (userRepository.count() > 0) {
             System.out.println("    Los usuarios ya existen. No se insertarán duplicados.");
             return;
         }
 
         System.out.println("    Creando usuarios iniciales...");
-
-        //  Crear usuario ADMIN
         User adminUser = User.builder()
                 .name("Admin")
                 .email("admin@mail.com")
@@ -80,7 +71,6 @@ public class DataInitializer implements CommandLineRunner {
                 .role(Role.ROLE_ADMIN)
                 .build();
 
-        // Crear usuario CLIENT
         User clientUser = User.builder()
                 .name("User")
                 .email("user@mail.com")
@@ -89,7 +79,6 @@ public class DataInitializer implements CommandLineRunner {
                 .role(Role.ROLE_CLIENT)
                 .build();
 
-        // Guardar usuarios en la base de datos
         userRepository.save(adminUser);
         userRepository.save(clientUser);
 
