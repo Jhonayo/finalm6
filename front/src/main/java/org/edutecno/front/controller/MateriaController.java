@@ -1,7 +1,6 @@
 package org.edutecno.front.controller;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-import org.edutecno.front.dto.AlumnoDTO;
 import org.edutecno.front.dto.MateriaDto;
 import org.edutecno.front.service.MateriaService;
 import org.springframework.stereotype.Controller;

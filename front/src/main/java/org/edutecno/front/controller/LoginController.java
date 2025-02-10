@@ -36,29 +36,18 @@ public class LoginController {
             HttpSession session,
             Model model
     ) {
-        log.info("Iniciando proceso de login para email: {}", email);
-
         try {
             String url = "http://localhost:8080/auth/login";
-            log.debug("URL de autenticación: {}", url);
 
-            // Crear request body
             Map<String, String> requestBody = new HashMap<>();
             requestBody.put("email", email);
             requestBody.put("password", password);
-            log.debug("Request body creado: {}", requestBody);
 
-            // Configurar headers
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<Map<String, String>> entity = new HttpEntity<>(requestBody, headers);
-            log.debug("Headers configurados: {}", headers);
 
-            // Hacer la petición
-            log.info("Realizando petición HTTP al servicio de autenticación");
             ResponseEntity<Map> response = restTemplate.postForEntity(url, entity, Map.class);
-            log.debug("Respuesta recibida. Status: {}", response.getStatusCode());
-            log.debug("Cuerpo de la respuesta: {}", response.getBody());
 
             if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
                 log.info("Autenticación exitosa");
@@ -67,11 +56,7 @@ public class LoginController {
                 String refreshToken = (String) response.getBody().get("refresh_token");
 
 
-                log.info("Access Token obtenido: {}", accessToken != null ? "presente" : "null");
-                log.info("Refresh Token obtenido: {}", refreshToken != null ? "presente" : "null");
-
                 if (response.getBody() == null) {
-                    log.error("El cuerpo de la respuesta es null");
                     model.addAttribute("error", "Respuesta inválida del servidor");
                     return "login";
                 }
@@ -80,17 +65,13 @@ public class LoginController {
                 log.debug("Rol extraído del token: {}", role);
 
                 if (role == null) {
-                    log.error("No se pudo extraer el rol del token.");
                     model.addAttribute("error", "Error al obtener el rol de usuario");
                     return "login";
                 }
 
-                // **Almacenar en la sesión**
                 session.setAttribute("jwt", accessToken);
                 session.setAttribute("role", role);
-                log.info("Token y rol almacenados en la sesión correctamente.");
-                log.info(" ----- el rol de la sesion es : {}", role);
-                    log.info("    ******   reenviando a alumnos *****");
+
                 return "redirect:/alumnos";
             } else {
                 log.warn("Autenticación fallida. Status code: {}", response.getStatusCode());

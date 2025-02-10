@@ -25,7 +25,6 @@ public class MateriaService {
     }
 
     public List<Map<String,Object>> listarMaterias() {
-        log.info(" --- Ingreso de materias servicio listar");
         ResponseEntity<Map[]> response = restTemplate.exchange(
                 "http://localhost:8080/api/materias",
                 HttpMethod.GET,
@@ -49,8 +48,6 @@ public class MateriaService {
                 new HttpEntity<>(materiaDto, crearHeaders()),
                 Void.class
         );
-
-        log.info("Respuesta del servidor al guardar alumno: " + response.getStatusCode());
     }
     public MateriaDto obtenerMateriaPorId(int id) {
         ResponseEntity<MateriaDto> response = restTemplate.exchange(
@@ -68,8 +65,6 @@ public class MateriaService {
                 new HttpEntity<>(materiaDto, crearHeaders()),
                 Void.class
         );
-
-        log.info("Respuesta del servidor al actualizar alumno: " + response.getStatusCode());
     }
 
     private HttpHeaders crearHeaders() {
@@ -77,17 +72,12 @@ public class MateriaService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         String token = (String) session.getAttribute("jwt");
-        log.info("  ---  Método para crear el header  ---");
-        log.info("   ******** Token del usuario: **********\n{}", token);
 
         if (token != null && !token.isEmpty()) {
             headers.set("Authorization", "Bearer " + token);
-            log.debug(" -----   Enviando token en la petición: Bearer {}", token);
         } else {
             log.warn(" No se encontró un token en la sesión.");
         }
-
-        log.info("----   Headers enviados en la petición: {}", headers);
         return headers;
     }
 

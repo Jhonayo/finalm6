@@ -23,7 +23,6 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/auth/**", "/css/**", "/js/**", "/webjars/**").permitAll()
-                        //TODO permitir el paso solo con el logeo con el token ver como applicarlo
                         .requestMatchers("/alumnos/**", "/materias/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -32,9 +31,9 @@ public class SecurityConfig {
                 )
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .usernameParameter("email")    // Especifica el nombre del campo email
-                        .passwordParameter("password") // Especifica el nombre del campo password
-                        .loginProcessingUrl("/auth/login")  // URL donde se enviará el formulario
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .loginProcessingUrl("/auth/login")
                         .permitAll()
                         .defaultSuccessUrl("/", true)
                         .failureUrl("/login?error=true")

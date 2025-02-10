@@ -29,7 +29,6 @@ public class JwtTokenStorage {
             String base64Payload = splitToken[1];
             String payloadJson = new String(Base64.getDecoder().decode(base64Payload));
 
-            // Extraer el campo "role" del JSON
             int roleIndex = payloadJson.indexOf("\"role\":\"");
             if (roleIndex == -1) {
                 return null;

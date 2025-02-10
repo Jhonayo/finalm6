@@ -23,7 +23,6 @@ public class AlumnoService {
     }
 
     public List<Map<String, Object>> obtenerAlumnos() {
-        log.info("  ---  ya entre en el alumno service obtener alumno ");
         ResponseEntity<Map[]> response = restTemplate.exchange(
                 "http://localhost:8080/api/alumnos",
                 HttpMethod.GET,
@@ -47,7 +46,6 @@ public class AlumnoService {
     }
 
     public AlumnoDTO obtenerAlumnoPorId(Long id) {
-        log.info("  ---  Obteniendo alumno con ID: " + id);
         ResponseEntity<AlumnoDTO> response = restTemplate.exchange(
                 "http://localhost:8080/api/alumnos/" + id,
                 HttpMethod.GET,
@@ -66,8 +64,6 @@ public class AlumnoService {
                 new HttpEntity<>(alumnoDTO, crearHeaders()),
                 Void.class
         );
-
-        log.info("Respuesta del servidor al actualizar alumno: " + response.getStatusCode());
     }
 
     private HttpHeaders crearHeaders() {
